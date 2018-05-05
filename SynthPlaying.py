@@ -41,17 +41,26 @@ fl.noteon(0, 60, velocity)
 fl.noteon(0, 67, velocity)
 fl.noteon(0, 76, velocity)
 
-# Chord is held for 2 seconds
+
 print('Starting playback 1')
+#128 means released 144 means it was just pressed
+is_pressed = False
 for i in range(1000):
     if input.poll():
-        print(input.read(1000))
+        #This is either 128 or 144
+        action = input.read(1000)[0][0][0]
+        if action == 144:
+            is_pressed = True
+        elif action == 128:
+            is_pressed = False
+    
+    if is_pressed == False:
+        time.sleep(1.0/times_per_sec)
+    else:
         s = []
         s = numpy.append(s, fl.get_samples(int(sample_size/times_per_sec)))
         samps = fluidsynth.raw_audio_string(s)
         strm.write(samps)
-    else:
-        time.sleep(1.0/times_per_sec)
 
 
 fl.noteoff(0, 60)
