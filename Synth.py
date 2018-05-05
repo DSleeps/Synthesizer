@@ -1,10 +1,11 @@
 import time
 import fluidsynth
+import sys
 
 fs = fluidsynth.Synth()
 fs.start()
 
-sfid = fs.sfload("Pads.sf2")
+sfid = fs.sfload(sys.argv[2][0])
 fs.program_select(0, sfid, 0, 0)
 
 fs.noteon(0, 60, 30)
