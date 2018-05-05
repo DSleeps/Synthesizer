@@ -6,8 +6,8 @@ import sys
 
 pa = pyaudio.PyAudio()
 strm = pa.open(
-    format = pyaudio.paInt16,
-    channels = 1,
+    format = pyaudio.paInt32,
+    channels = 2,
     rate = 44100,
     output = True)
 
