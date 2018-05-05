@@ -4,7 +4,7 @@ import fluidsynth
 fs = fluidsynth.Synth()
 fs.start()
 
-sfid = fs.sfload("example.sf2")
+sfid = fs.sfload("Pads.sf2")
 fs.program_select(0, sfid, 0, 0)
 
 fs.noteon(0, 60, 30)
