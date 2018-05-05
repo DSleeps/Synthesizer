@@ -3,6 +3,7 @@ import numpy
 import pyaudio
 import fluidsynth
 import sys
+from pygame import midi
 
 sample_size = 44100
 #sample_size = 22000
@@ -16,6 +17,12 @@ strm = pa.open(
     channels = 2,
     rate = sample_size,
     output = True)
+
+
+#Initializing the Midi keyboard
+midi.init()
+INPUTNO = midi.get_default_input_id()
+input = midi.Input(INPUTNO)
 
 s = []
 
@@ -34,6 +41,7 @@ fl.noteon(0, 76, velocity)
 # Chord is held for 2 seconds
 print('Starting playback 1')
 for i in range(1000):
+    print(input.read(100))
     s = []
     s = numpy.append(s, fl.get_samples(int(sample_size/times_per_sec)))
     samps = fluidsynth.raw_audio_string(s)
