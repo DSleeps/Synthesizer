@@ -5,6 +5,7 @@ import sys
 fs = fluidsynth.Synth()
 fs.start()
 
+print(sys.argv)
 sfid = fs.sfload(sys.argv[2][0])
 fs.program_select(0, sfid, 0, 0)
 
