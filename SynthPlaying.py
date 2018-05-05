@@ -21,8 +21,11 @@ strm = pa.open(
 
 #Initializing the Midi keyboard
 midi.init()
-INPUTNO = midi.get_default_input_id()
+INPUTNO = 3     #Hardcoded this as 3 because that's what I found it to be
 input = midi.Input(INPUTNO)
+
+for i in range(midi.get_count()):
+    print(midi.get_device_info(i))
 
 s = []
 
@@ -41,11 +44,14 @@ fl.noteon(0, 76, velocity)
 # Chord is held for 2 seconds
 print('Starting playback 1')
 for i in range(1000):
-    print(input.read(100))
-    s = []
-    s = numpy.append(s, fl.get_samples(int(sample_size/times_per_sec)))
-    samps = fluidsynth.raw_audio_string(s)
-    strm.write(samps)
+    if input.poll():
+        print(input.read(1000))
+        s = []
+        s = numpy.append(s, fl.get_samples(int(sample_size/times_per_sec)))
+        samps = fluidsynth.raw_audio_string(s)
+        strm.write(samps)
+    else:
+        time.sleep(1.0/times_per_sec)
 
 
 fl.noteoff(0, 60)
@@ -62,3 +68,5 @@ samps = fluidsynth.raw_audio_string(s)
 print(len(samps))
 print('Starting playback')
 strm.write(samps)
+
+input.close()
