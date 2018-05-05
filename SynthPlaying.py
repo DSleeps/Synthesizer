@@ -8,6 +8,7 @@ sample_size = 44100
 #sample_size = 22000
 
 velocity = 100
+times_per_sec = 100
 
 pa = pyaudio.PyAudio()
 strm = pa.open(
@@ -33,7 +34,8 @@ fl.noteon(0, 76, velocity)
 # Chord is held for 2 seconds
 print('Starting playback 1')
 for i in range(1000):
-    s = fl.get_samples(sample_size * .01)
+    s = []
+    s = numpy.append(s, fl.get_samples(int(sample_size/times_per_sec)))
     samps = fluidsynth.raw_audio_string(s)
     strm.write(samps)
 
