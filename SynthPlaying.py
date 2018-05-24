@@ -21,9 +21,10 @@ strm = pa.open(
 
 #Initializing the Midi keyboard
 midi.init()
-INPUTNO = 3     #Hardcoded this as 3 because that's what I found it to be
+INPUTNO = 20     #Hardcoded this as 3 because that's what I found it to be
 input = midi.Input(INPUTNO)
 
+print(midi.get_count())
 for i in range(midi.get_count()):
     print(midi.get_device_info(i))
 
@@ -53,7 +54,7 @@ for i in range(1000):
             is_pressed = True
         elif action == 128:
             is_pressed = False
-    
+
     if is_pressed == False:
         time.sleep(1.0/times_per_sec)
     else:
