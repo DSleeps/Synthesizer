@@ -3,7 +3,7 @@
 MIDI_CREATE_DEFAULT_INSTANCE();
 
 //The number of buttons
-int button_count = 11;
+int button_count = 12;
 
 //The number of the main keys
 int main_button_count = 6;
@@ -11,11 +11,8 @@ int main_button_count = 6;
 //The array index corresponds to the index in the fingerings string
 //The last ones should be the auxiallary keys i.e The G# key, D# key, ect
 
-//For now 6th is biss key, 7th is G# key, 8th is D# key, 9th is side Bb key, and 10th is side C key
-int button_pins [11] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-
-//Previous values of the buttons
-int p_values [12];
+//For now 6th is biss key, 7th is G# key, 8th is D# key, 9th is side Bb key, 10th is side C key, and 11th is alternate F#
+int button_pins [12] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 
 //All of the sax fingerings. 0 means the key is down
 String fingerings = String("111111\n") +
@@ -59,7 +56,7 @@ void loop() {
     String f_list = fingerings;
     int index = 0;
 
-    //For now 6th is biss key, 7th is G# key, 8th is D# key, 9th is side A# key, and 10th is side C key
+    //For now 6th is biss key, 7th is G# key, 8th is D# key, 9th is side A# key, 10th is side C key, and 11th is alternate F#
     while (true) {
         String fingering_test = f_list.substring(0, f_list.indexOf("\n"));
         if (fingering_test == current_fingering) {
@@ -75,6 +72,8 @@ void loop() {
             } else if (fingering_test == String("000111") && digitalRead(button_pins[7]) == 0) {
                 current_note += 1;
             } else if (fingering_test == String("000000") && digitalRead(button_pins[8]) == 0) {
+                current_note += 1;
+            } else if (fingering_test == String("000011") && digitalRead(button_pins[11]) == 0) {
                 current_note += 1;
             }
 
